@@ -450,7 +450,7 @@ const DetailPemain = () => {
               ) : (
                 <Trash2 className="w-4 h-4 mr-2" />
               )}
-              {deleting ? 'Menghapus.. .' : 'Hapus'}
+              {deleting ? 'Menghapus...' : 'Hapus'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

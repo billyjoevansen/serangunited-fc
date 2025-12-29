@@ -576,7 +576,7 @@ const AdminPenilaianManagement = () => {
               {deleting
                 ? deleteDialog.isBulk
                   ? `Menghapus ${deleteProgress.current}/${deleteProgress.total}...`
-                  : 'Menghapus.. .'
+                  : 'Menghapus...'
                 : deleteDialog.isBulk
                 ? `Hapus ${selectedIds.size} Penilaian`
                 : 'Hapus'}

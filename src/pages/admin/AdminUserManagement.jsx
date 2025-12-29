@@ -678,7 +678,7 @@ const AdminUserManagement = () => {
               ) : (
                 <UserPlus className="w-4 h-4 mr-2" />
               )}
-              {addingUser ? 'Menyimpan.. .' : 'Tambah User'}
+              {addingUser ? 'Menyimpan...' : 'Tambah User'}
             </Button>
           </DialogFooter>
         </DialogContent>

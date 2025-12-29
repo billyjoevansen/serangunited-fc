@@ -282,7 +282,7 @@ function FormPenilaian() {
             ) : (
               <Save className="w-4 h-4 mr-2" />
             )}
-            {submitting ? 'Menyimpan.. .' : 'Simpan Penilaian'}
+            {submitting ? 'Menyimpan...' : 'Simpan Penilaian'}
           </Button>
         </div>
       </form>

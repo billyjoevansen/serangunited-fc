@@ -726,7 +726,7 @@ const AdminArsipManagement = () => {
               ) : (
                 <FileText className="w-4 h-4 mr-2" />
               )}
-              {saving ? 'Menyimpan.. .' : 'Simpan'}
+              {saving ? 'Menyimpan...' : 'Simpan'}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -789,7 +789,7 @@ const AdminArsipManagement = () => {
               {deleting
                 ? deleteDialog.isBulk
                   ? `Menghapus ${deleteProgress.current}/${deleteProgress.total}... `
-                  : 'Menghapus.. .'
+                  : 'Menghapus...'
                 : deleteDialog.isBulk
                 ? `Hapus ${selectedIds.length} Arsip`
                 : 'Hapus'}

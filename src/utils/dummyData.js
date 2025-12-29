@@ -52,17 +52,25 @@ export const NAMA_PENILAI = [
   "Coach Ahmad Yani",
   "Coach Budi Santoso",
   "Pelatih Dedi Kusuma",
-  "Coach Erik Tohir",
-  "Pelatih Firman Utomo",
-  "Coach Gunawan Dwi",
-  "Pelatih Hendra Wijaya",
-  "Coach Iwan Setiawan",
   "Pelatih Joko Susilo",
   "Coach Kurniawan Adi",
   "Pelatih Lukman Hakim",
   "Coach Mario Gomes",
   "Pelatih Nanang Haryanto",
-  "Coach Oki Setiabudi"
+  "Coach Oki Setiabudi",
+  "Patrick Kluivert",
+  "Shin Tae-yong",
+  "Luis Milla",
+  "Alex Ferguson",
+  "Jose Mourinho",
+  "Pep Guardiola",
+  "Carlo Ancelotti",
+  "Zinedine Zidane",
+  "Iker Casillas",
+  "Sergio Ramos",
+  "Andres Iniesta",
+  "Roberto Carlos",
+  "Janjang Nurjaman",
 ]
 
 export const CATATAN_PENILAIAN = [
@@ -84,9 +92,11 @@ export const CATATAN_PENILAIAN = [
   "Agresif dalam bertahan, perlu kontrol emosi",
   "Finishing perlu diasah lebih lanjut",
   "Leadership bagus, calon kapten masa depan",
-  "", // Kosongkan catatan
-  "",
-  ""
+  "Kriminalitas tinggi, perlu bimbingan lebih",
+  "Terlalu sering cedera, perlu perhatian medis",
+  "Lamban dalam reaksi, perlu latihan kecepatan",
+  "Kurang percaya diri, butuh motivasi ekstra",
+  "Perlu adaptasi lebih cepat dengan gaya bermain tim",
 ]
 
 export const EMAIL_DOMAINS = [
@@ -111,7 +121,7 @@ export const AVATAR_SERVICES = {
   pravatar: (id) => 
     `https://i.pravatar.cc/200?u=${encodeURIComponent(id)}`,
   randomUser: (gender, id) =>
-    `https://randomuser.me/api/portraits/${gender === 'men' ? 'men' : 'women'}/${id % 100}. jpg`
+    `https://randomuser.me/api/portraits/${gender === 'men' ? 'men' : 'women'}/${id % 100}.jpg`
 }
 
 
@@ -233,9 +243,9 @@ export const generateSkorPenilaian = (baseScore, fields, skorRange = [0, 100]) =
   const variasi = {}
   
   fields.forEach(field => {
-    let skor = baseScore + randomInt(-GENERATOR_DEFAULTS. skorVariasi, GENERATOR_DEFAULTS. skorVariasi)
+    let skor = baseScore + randomInt(-GENERATOR_DEFAULTS.skorVariasi, GENERATOR_DEFAULTS.skorVariasi)
     skor = Math.max(skorRange[0], Math.min(skorRange[1], skor))
-    skor = Math.max(0, Math. min(100, skor))
+    skor = Math.max(0, Math.min(100, skor))
     variasi[field] = skor
   })
   

@@ -40,11 +40,11 @@ export const parseCSV = (csvText) => {
 export const mapCSVToDatabase = (csvRow) => {
   return {
     nama: csvRow.nama || csvRow.name || csvRow.nama_lengkap || '',
-    tanggal_lahir: csvRow. tanggal_lahir || csvRow. tgl_lahir || csvRow.birthdate || csvRow. dob || null,
-    posisi: csvRow. posisi || csvRow.position || '',
-    tinggi_badan: parseInt(csvRow.tinggi_badan || csvRow.tinggi || csvRow. height) || null,
-    berat_badan: parseInt(csvRow.berat_badan || csvRow. berat || csvRow. weight) || null,
-    no_telepon: csvRow. no_telepon || csvRow.telepon || csvRow.phone || csvRow.hp || '',
+    tanggal_lahir: csvRow.tanggal_lahir || csvRow.tgl_lahir || csvRow.birthdate || csvRow.dob || null,
+    posisi: csvRow.posisi || csvRow.position || '',
+    tinggi_badan: parseInt(csvRow.tinggi_badan || csvRow.tinggi || csvRow.height) || null,
+    berat_badan: parseInt(csvRow.berat_badan || csvRow.berat || csvRow.weight) || null,
+    no_telepon: csvRow.no_telepon || csvRow.telepon || csvRow.phone || csvRow.hp || '',
     email: csvRow.email || '',
   };
 };
@@ -57,7 +57,7 @@ export const validatePemainData = (data) => {
     errors.push('Nama wajib diisi');
   }
   if (!data.tanggal_lahir) {
-    errors. push('Tanggal lahir wajib diisi');
+    errors.push('Tanggal lahir wajib diisi');
   }
   if (!data.posisi) {
     errors.push('Posisi wajib diisi');

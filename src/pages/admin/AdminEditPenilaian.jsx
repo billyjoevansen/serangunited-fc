@@ -661,7 +661,7 @@ const AdminEditPenilaian = () => {
               ) : (
                 <Save className="w-4 h-4 mr-2" />
               )}
-              {saving ? 'Menyimpan.. .' : 'Simpan Perubahan'}
+              {saving ? 'Menyimpan...' : 'Simpan Perubahan'}
             </Button>
 
             <Button
@@ -713,7 +713,7 @@ const AdminEditPenilaian = () => {
                       ) : (
                         <Trash2 className="w-4 h-4 mr-2" />
                       )}
-                      {deleting ? 'Menghapus.. .' : 'Ya, Hapus'}
+                      {deleting ? 'Menghapus...' : 'Ya, Hapus'}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>

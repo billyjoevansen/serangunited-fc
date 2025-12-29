@@ -207,7 +207,7 @@ const StatusBadge = ({ count, label, variant }) => {
   return (
     <div
       className={cn(
-        'flex items-center gap-1. 5 px-2. 5 py-1 rounded-full text-xs font-medium whitespace-nowrap',
+        'flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap',
         variantStyles[variant]
       )}
     >

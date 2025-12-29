@@ -152,7 +152,7 @@ export const TESTIMONIALS = [
     image: "/coach/sty.webp"
   },
   {
-    name: "Yi Long Ma",
+    name: "Yi Long-Ma",
     role: "Technical Director",
     quote: "Proses rekrutmen jadi lebih efisien dan terukur dengan sistem ini.",
     image: "/coach/yilongma.webp"

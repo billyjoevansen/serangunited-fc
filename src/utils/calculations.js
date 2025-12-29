@@ -16,7 +16,6 @@ export const POSISI_OPTIONS = [
 
 // Range tinggi badan pria Indonesia (dalam cm)
 export const TINGGI_BADAN_CONFIG = {
-  // Range untuk pemain lapangan (non-kiper)
   pemain: {
     min: 155,
     idealMin: 170,
@@ -80,7 +79,7 @@ export const hitungSkorPostur = (tinggiBadan, posisi = '') => {
   );
 
   // Pilih konfigurasi berdasarkan posisi
-  const config = isKiper ?  TINGGI_BADAN_CONFIG. kiper : TINGGI_BADAN_CONFIG.pemain;
+  const config = isKiper ?  TINGGI_BADAN_CONFIG.kiper : TINGGI_BADAN_CONFIG.pemain;
 
   let skor = 0;
 
@@ -101,7 +100,7 @@ export const hitungSkorPostur = (tinggiBadan, posisi = '') => {
       skor = 70 + (position / halfRange) * 30;
     } else {
       const position = tinggiBadan - midPoint;
-      const halfRange = config. idealMax - midPoint;
+      const halfRange = config.idealMax - midPoint;
       skor = 100 - (position / halfRange) * 15;
     }
   } else if (tinggiBadan > config.idealMax && tinggiBadan <= config.max) {
@@ -120,7 +119,7 @@ export const hitungSkorPostur = (tinggiBadan, posisi = '') => {
     skor = Math.min(100, skor + 3);
   }
 
-  return Math. round(Math.max(0, Math.min(100, skor)));
+  return Math.round(Math.max(0, Math.min(100, skor)));
 };
 
 /**
@@ -222,7 +221,7 @@ export const calculateAge = (birthDate) => {
   let age = today.getFullYear() - birth.getFullYear();
   const monthDiff = today.getMonth() - birth.getMonth();
   
-  if (monthDiff < 0 || (monthDiff === 0 && today. getDate() < birth.getDate())) {
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
     age--;
   }
   
