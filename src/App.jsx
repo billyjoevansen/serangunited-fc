@@ -172,7 +172,7 @@ function App() {
 
             {/* Admin Edit Penilaian */}
             <Route
-              path="/admin/penilaian/: id/edit"
+              path="/admin/penilaian/:id/edit"
               element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <AdminEditPenilaian />
