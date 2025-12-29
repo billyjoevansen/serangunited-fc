@@ -16,17 +16,19 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check localStorage for saved session
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
-      setUser(JSON.parse(savedUser));
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        localStorage.removeItem('user');
+      }
     }
     setLoading(false);
   }, []);
 
   const login = async (email, password) => {
     try {
-      // Verify credentials
       const { data, error } = await supabase.rpc('verify_user_login', {
         user_email: email,
         user_password: password,
@@ -50,29 +52,41 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const { data, error } = await supabase
-        .from('users')
-        .insert([
-          {
-            email: userData.email,
-            password_hash: userData.password, // Will be hashed by trigger
-            nama: userData.nama,
-            role: 'rekrut', // Default role for registration
-            foto_url: userData.foto_url || null,
-          },
-        ])
-        .select()
-        .single();
+      // Panggil RPC function untuk register
+      const { data, error } = await supabase.rpc('register_user', {
+        p_email: userData.email,
+        p_password: userData.password,
+        p_nama: userData.nama,
+        p_foto_url: userData.foto_url || null,
+      });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase RPC error:', error);
+        throw error;
+      }
 
-      // Auto login after registration
-      setUser(data);
-      localStorage.setItem('user', JSON.stringify(data));
-      return { user: data, error: null };
+      console.log('Register response:', data);
+
+      if (data) {
+        // Data sudah berupa JSON object
+        const newUser = typeof data === 'string' ? JSON.parse(data) : data;
+        setUser(newUser);
+        localStorage.setItem('user', JSON.stringify(newUser));
+        return { user: newUser, error: null };
+      } else {
+        throw new Error('Gagal membuat akun');
+      }
     } catch (err) {
       console.error('Register error:', err);
-      return { user: null, error: err.message };
+
+      let errorMessage = err.message;
+      if (err.message.includes('Email sudah terdaftar')) {
+        errorMessage = 'Email sudah terdaftar.  Silakan gunakan email lain. ';
+      } else if (err.message.includes('duplicate key')) {
+        errorMessage = 'Email sudah terdaftar. Silakan gunakan email lain. ';
+      }
+
+      return { user: null, error: errorMessage };
     }
   };
 
@@ -87,7 +101,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(newUser));
   };
 
-  // Role checking helpers
   const isAdmin = user?.role === 'admin';
   const isPenilai = user?.role === 'penilai';
   const isRekrut = user?.role === 'rekrut';

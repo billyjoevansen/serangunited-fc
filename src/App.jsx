@@ -17,6 +17,7 @@ import TambahPemain from '@/pages/TambahPemain';
 import DetailPemain from '@/pages/DetailPemain';
 import FormPenilaian from '@/pages/FormPenilaian';
 import HasilSeleksi from '@/pages/HasilSeleksi';
+import ArsipPemain from '@/pages/ArsipPemain';
 
 // Admin Pages
 import { AdminDashboard, AdminEditPemain, AdminEditUser, AdminEditPenilaian } from '@/pages/admin';
@@ -39,13 +40,19 @@ function App() {
       <AuthProvider>
         <Router>
           <Routes>
+            {/* ==================== */}
             {/* Public Routes */}
+            {/* ==================== */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
+            {/* ==================== */}
             {/* Dashboard Routes */}
+            {/* ==================== */}
+
+            {/* Daftar Pemain - Semua Role */}
             <Route
               path="/dashboard"
               element={
@@ -57,6 +64,7 @@ function App() {
               }
             />
 
+            {/* Tambah Pemain - Admin & Penilai */}
             <Route
               path="/dashboard/tambah-pemain"
               element={
@@ -68,6 +76,7 @@ function App() {
               }
             />
 
+            {/* Detail Pemain - Semua Role */}
             <Route
               path="/dashboard/pemain/:id"
               element={
@@ -79,6 +88,7 @@ function App() {
               }
             />
 
+            {/* Form Penilaian - Admin & Penilai */}
             <Route
               path="/dashboard/penilaian/:pemainId"
               element={
@@ -90,15 +100,19 @@ function App() {
               }
             />
 
+            {/* Edit Penilaian - Admin & Penilai */}
             <Route
               path="/dashboard/penilaian/:id/edit"
               element={
                 <ProtectedRoute allowedRoles={['admin', 'penilai']}>
-                  <AdminEditPenilaian />
+                  <DashboardLayout>
+                    <AdminEditPenilaian />
+                  </DashboardLayout>
                 </ProtectedRoute>
               }
             />
 
+            {/* Hasil Seleksi - Semua Role */}
             <Route
               path="/dashboard/hasil-seleksi"
               element={
@@ -110,7 +124,23 @@ function App() {
               }
             />
 
+            {/* Arsip Pemain - Admin & Penilai */}
+            <Route
+              path="/dashboard/arsip"
+              element={
+                <ProtectedRoute allowedRoles={['admin', 'penilai']}>
+                  <DashboardLayout>
+                    <ArsipPemain />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* ==================== */}
             {/* Admin Routes */}
+            {/* ==================== */}
+
+            {/* Admin Dashboard */}
             <Route
               path="/admin"
               element={
@@ -120,6 +150,7 @@ function App() {
               }
             />
 
+            {/* Admin Edit Pemain */}
             <Route
               path="/admin/pemain/:id/edit"
               element={
@@ -129,6 +160,7 @@ function App() {
               }
             />
 
+            {/* Admin Edit User */}
             <Route
               path="/admin/user/:id/edit"
               element={
@@ -138,8 +170,9 @@ function App() {
               }
             />
 
+            {/* Admin Edit Penilaian */}
             <Route
-              path="/admin/penilaian/:id/edit"
+              path="/admin/penilaian/: id/edit"
               element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <AdminEditPenilaian />

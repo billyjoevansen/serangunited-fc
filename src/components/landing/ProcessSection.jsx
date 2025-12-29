@@ -61,7 +61,8 @@ const ProcessSection = () => {
           <p className="text-2xl md:text-3xl font-light italic text-gray-400 max-w-3xl mx-auto">
             "Jika Anda berlatih dengan buruk, Anda bermain dengan buruk. Jika Anda bekerja seperti
             binatang buas dalam latihan, Anda bermain dengan cara yang sama"
-            <p className="text-white font-semibold">- Pep Guardiola</p>
+            <br />
+            <i className="text-white font-semibold">- Pep Guardiola</i>
           </p>
         </motion.div>
       </div>

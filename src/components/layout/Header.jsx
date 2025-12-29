@@ -13,7 +13,18 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, Users, UserPlus, Trophy, Home, LogOut, Shield, User, Settings } from 'lucide-react';
+import {
+  Menu,
+  Users,
+  UserPlus,
+  Trophy,
+  Home,
+  LogOut,
+  Shield,
+  User,
+  Settings,
+  FolderArchive,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Header = () => {
@@ -26,6 +37,7 @@ const Header = () => {
     { path: '/dashboard', label: 'Daftar Pemain', icon: Users },
     { path: '/dashboard/tambah-pemain', label: 'Registrasi', icon: UserPlus, show: canRate },
     { path: '/dashboard/hasil-seleksi', label: 'Hasil Seleksi', icon: Trophy },
+    { path: '/dashboard/arsip', label: 'Arsip', icon: FolderArchive, show: canRate },
   ].filter((link) => link.show !== false);
 
   const isActive = (path) => location.pathname === path;
@@ -126,6 +138,16 @@ const Header = () => {
                       Home
                     </Link>
                   </DropdownMenuItem>
+
+                  {/* Menu Arsip di Dropdown - Untuk Admin & Penilai */}
+                  {canRate && (
+                    <DropdownMenuItem asChild>
+                      <Link to="/dashboard/arsip" className="cursor-pointer">
+                        <FolderArchive className="w-4 h-4 mr-2" />
+                        Arsip Pemain
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
 
                   {isAdmin && (
                     <DropdownMenuItem asChild>
