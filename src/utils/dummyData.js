@@ -7,7 +7,11 @@ export const NAMA_DEPAN = [
   "Rizky", "Satria", "Teguh", "Ujang", "Vicky", "Wawan", "Yoga", "Zainal",
   "Arif", "Bagus", "Chandra", "Dani", "Erik", "Firman", "Guntur", "Haris",
   "Indra", "Jaya", "Krisna", "Lutfi", "Maman", "Nugroho", "Oki", "Pandu",
-  "Qori", "Rahmat", "Sandi", "Tomi", "Udin", "Viktor", "Wira", "Yanto"
+  "Qori", "Rahmat", "Sandi", "Tomi", "Udin", "Viktor", "Wira", "Yanto",
+  "Zaki", "Agus", "Bima", "Cipto", "Dony", "Edi", "Fikri", "Gema", "Halim",
+  "Iqbal", "Jefri", "Karel", "Lazuardi", "Miftah", "Nanda", "Oka", "Pratama",
+  "Qasim", "Rafi", "Sulaiman", "Tirta", "Uwais", "Vian", "Waskita", "Yogi",
+  "Zaenal", "Tubagus", "Samsul", "Rendy", "Purnama", "Nabil", "Mukti", "Lukito"
 ]
 
 export const NAMA_BELAKANG = [
@@ -17,7 +21,16 @@ export const NAMA_BELAKANG = [
   "Mubarak", "Saputra", "Anggara", "Buana", "Prayoga", "Wibowo", "Santoso",
   "Harianto", "Sulaeman", "Zamrun", "Gonzales", "Hariyadi", "Manurung",
   "Siregar", "Nasution", "Situmorang", "Panjaitan", "Simanjuntak", "Hutapea",
-  "Simbolon", "Sinaga", "Tampubolon", "Siahaan", "Lubis", "Harahap", "Daulay"
+  "Simbolon", "Sinaga", "Tampubolon", "Siahaan", "Lubis", "Harahap", "Daulay",
+  "Batubara", "Ginting", "Tarigan", "Sembiring", "Pasaribu", "Sitompul",
+  "Lumbanraja", "Marbun", "Pohan", "Saragih", "Tambunan", "Rangkuti",
+  "Silalahi", "Manalu", "Simatupang", "Panigoro", "Sitohang", "Situmorang",
+  "Sinurat", "Tanjung", "Gultom", "Hutasoit", "Siregar", "Nasution",
+  "Situmorang", "Panjaitan", "Simanjuntak", "Hutapea", "Simbolon", "Sinaga",
+  "Tampubolon", "Siahaan", "Lubis", "Harahap", "Daulay", "Batubara",
+  "Ginting", "Tarigan", "Sembiring", "Pasaribu", "Sitompul", "Lumbanraja",
+  "Marbun", "Pohan", "Saragih", "Tambunan", "Rangkuti", "Silalahi",
+  "Manalu", "Simatupang", "Panigoro", "Sitohang", "Faldi", "Setiawan", "Wiratara"
 ]
 
 export const POSISI_DENGAN_TINGGI = [
@@ -78,7 +91,7 @@ export const CATATAN_PENILAIAN = [
 
 export const EMAIL_DOMAINS = [
   "gmail.com",
-  "yahoo. com",
+  "yahoo.com",
   "email.com",
   "outlook.com",
   "hotmail.com",
@@ -90,7 +103,7 @@ export const EMAIL_DOMAINS = [
  */
 export const AVATAR_SERVICES = {
   dicebear: (seed, style = "avataaars") => 
-    `https://api.dicebear. com/7.x/${style}/svg?seed=${encodeURIComponent(seed)}`,
+    `https://api.dicebear.com/7.x/${style}/svg?seed=${encodeURIComponent(seed)}`,
   uiAvatars: (name) => 
     `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&size=200`,
   robohash: (seed) => 

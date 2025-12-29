@@ -456,9 +456,7 @@ const DummyDataGenerator = ({ showAdminOnly = true }) => {
             </div>
           </TabsContent>
 
-          {/* =============================================
-              TAB 2: PEMAIN + PENILAIAN (SUDAH DINILAI)
-          ============================================= */}
+          {/* TAB 2: PEMAIN + PENILAIAN (SUDAH DINILAI) */}
           <TabsContent value="penilaian" className="space-y-6 mt-6">
             {/* Header Info */}
             <div className="p-4 bg-emerald-50 dark:bg-emerald-950 rounded-xl border border-emerald-200 dark:border-emerald-800">
