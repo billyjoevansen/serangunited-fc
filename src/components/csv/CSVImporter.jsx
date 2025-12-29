@@ -16,7 +16,7 @@ const CSVImporter = ({ onImport, importing = false }) => {
     const file = event.target.files[0];
     if (!file) return;
 
-    if (!file.name.endsWith('. csv')) {
+    if (!file.name.endsWith('.csv')) {
       setImportResult({
         success: false,
         message: 'File harus berformat CSV! ',
