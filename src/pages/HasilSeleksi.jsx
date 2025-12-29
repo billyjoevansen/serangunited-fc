@@ -402,7 +402,7 @@ const HasilSeleksi = () => {
       </Card>
 
       {/* Arsip Modal - Hanya Admin */}
-      {isAdmin && (
+      {canRate && (
         <ArsipPemainModal
           open={arsipModalOpen}
           onOpenChange={setArsipModalOpen}

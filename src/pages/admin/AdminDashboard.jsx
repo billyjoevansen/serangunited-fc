@@ -1,6 +1,14 @@
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Users, UserCheck, ClipboardList, Dices, LayoutDashboard } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  Users,
+  UserCheck,
+  ClipboardList,
+  LayoutDashboard,
+  FolderArchive,
+  Dices,
+} from 'lucide-react';
 
 // Import komponen admin
 import AdminHeader from './AdminHeader';
@@ -9,6 +17,7 @@ import AdminUserManagement from './AdminUserManagement';
 import AdminPemainManagement from './AdminPemainManagement';
 import AdminPenilaianManagement from './AdminPenilaianManagement';
 import AdminGenerator from './AdminGenerator';
+import AdminArsipManagement from './AdminArsipManagement';
 
 // Konfigurasi tabs
 const ADMIN_TABS = [
@@ -33,9 +42,9 @@ const ADMIN_TABS = [
     icon: ClipboardList,
   },
   {
-    value: 'generator',
-    label: 'Generator',
-    icon: Dices,
+    value: 'arsip',
+    label: 'Arsip',
+    icon: FolderArchive,
   },
 ];
 
@@ -78,11 +87,26 @@ function AdminDashboard() {
             <AdminPenilaianManagement />
           </TabsContent>
 
+          <TabsContent value="arsip">
+            <AdminArsipManagement />
+          </TabsContent>
+
           <TabsContent value="generator">
             <AdminGenerator />
           </TabsContent>
         </Tabs>
       </main>
+
+      {/* Floating Button - Generator */}
+      {/* Floating Button - Generator */}
+      <Button
+        size="lg"
+        variant="outline"
+        onClick={() => setActiveTab('generator')}
+        className="fixed bottom-6 left-6 h-16 w-16 rounded-full shadow-lg hover:scale-110 transition-transform z-50 bg-background border-2"
+      >
+        <Dices className="h-10 w-10" />
+      </Button>
     </div>
   );
 }
