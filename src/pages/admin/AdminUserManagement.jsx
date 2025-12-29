@@ -37,12 +37,21 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 import {
   Search,
   MoreHorizontal,
@@ -58,6 +67,9 @@ import {
   Shield,
   UserCheck,
   UserX,
+  UserPlus,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import { formatDateTime } from '@/utils/formatters';
 import { cn } from '@/lib/utils';
@@ -78,6 +90,17 @@ const AdminUserManagement = () => {
   const [deleteDialog, setDeleteDialog] = useState({ open: false, user: null, isBulk: false });
   const [deleting, setDeleting] = useState(false);
   const [deleteProgress, setDeleteProgress] = useState({ current: 0, total: 0 });
+
+  // Add user state
+  const [addUserDialog, setAddUserDialog] = useState(false);
+  const [addingUser, setAddingUser] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [newUser, setNewUser] = useState({
+    nama: '',
+    email: '',
+    password: '',
+    role: 'rekrut',
+  });
 
   // Fetch users
   const fetchUsers = async () => {
@@ -128,7 +151,6 @@ const AdminUserManagement = () => {
 
   // Handle select single item
   const handleSelectItem = (id) => {
-    // Prevent selecting current user
     if (id === currentUser?.id) return;
 
     setSelectedIds((prev) => {
@@ -146,7 +168,6 @@ const AdminUserManagement = () => {
       setSelectedIds([]);
       setIsAllSelected(false);
     } else {
-      // Select all except current user
       setSelectedIds(selectableUsers.map((u) => u.id));
       setIsAllSelected(true);
     }
@@ -219,7 +240,6 @@ const AdminUserManagement = () => {
       setDeleteProgress({ current: i + 1, total: selectedIds.length });
     }
 
-    // Update local state
     setUsers((prev) => prev.filter((u) => !selectedIds.includes(u.id)));
     setSelectedIds([]);
     setIsAllSelected(false);
@@ -239,6 +259,85 @@ const AdminUserManagement = () => {
   // Open delete confirmation
   const openDeleteConfirm = (user = null, isBulk = false) => {
     setDeleteDialog({ open: true, user, isBulk });
+  };
+
+  // Handle add user
+  const handleAddUser = async () => {
+    // Validation
+    if (!newUser.nama || !newUser.email || !newUser.password) {
+      toast({
+        title: 'Error',
+        description: 'Semua field harus diisi',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (newUser.password.length < 6) {
+      toast({
+        title: 'Error',
+        description: 'Password minimal 6 karakter',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setAddingUser(true);
+    try {
+      // Use RPC function to register with password hashing
+      const { data, error } = await supabase.rpc('register_user_admin', {
+        p_email: newUser.email,
+        p_password: newUser.password,
+        p_nama: newUser.nama,
+        p_role: newUser.role,
+        p_foto_url: null,
+      });
+
+      if (error) {
+        // Fallback:  direct insert with trigger hashing
+        const { data: insertData, error: insertError } = await supabase
+          .from('users')
+          .insert([
+            {
+              email: newUser.email,
+              password_hash: newUser.password, // Trigger will hash this
+              nama: newUser.nama,
+              role: newUser.role,
+            },
+          ])
+          .select()
+          .single();
+
+        if (insertError) throw insertError;
+      }
+
+      toast({
+        title: 'Berhasil',
+        description: `User ${newUser.nama} berhasil ditambahkan`,
+      });
+
+      // Reset form and close dialog
+      setNewUser({ nama: '', email: '', password: '', role: 'rekrut' });
+      setAddUserDialog(false);
+      fetchUsers();
+    } catch (error) {
+      console.error('Error adding user:', error);
+
+      let errorMessage = 'Gagal menambahkan user';
+      if (error.message.includes('duplicate') || error.message.includes('already exists')) {
+        errorMessage = 'Email sudah terdaftar';
+      } else if (error.message.includes('Email sudah terdaftar')) {
+        errorMessage = 'Email sudah terdaftar';
+      }
+
+      toast({
+        title: 'Error',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+    } finally {
+      setAddingUser(false);
+    }
   };
 
   // Get role badge
@@ -278,10 +377,16 @@ const AdminUserManagement = () => {
               </CardTitle>
               <CardDescription>Kelola pengguna dan hak akses sistem</CardDescription>
             </div>
-            <Button variant="outline" size="sm" onClick={fetchUsers} disabled={loading}>
-              <RefreshCw className={cn('w-4 h-4 mr-2', loading && 'animate-spin')} />
-              Refresh
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" onClick={fetchUsers} disabled={loading}>
+                <RefreshCw className={cn('w-4 h-4 mr-2', loading && 'animate-spin')} />
+                Refresh
+              </Button>
+              <Button size="sm" onClick={() => setAddUserDialog(true)}>
+                <UserPlus className="w-4 h-4 mr-2" />
+                Tambah User
+              </Button>
+            </div>
           </div>
 
           {/* Selection Actions Bar */}
@@ -473,6 +578,112 @@ const AdminUserManagement = () => {
         </div>
       </CardContent>
 
+      {/* Add User Dialog */}
+      <Dialog open={addUserDialog} onOpenChange={setAddUserDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <UserPlus className="w-5 h-5" />
+              Tambah User Baru
+            </DialogTitle>
+            <DialogDescription>
+              Buat akun pengguna baru dengan role yang diinginkan
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="nama">Nama Lengkap</Label>
+              <Input
+                id="nama"
+                placeholder="Masukkan nama lengkap"
+                value={newUser.nama}
+                onChange={(e) => setNewUser({ ...newUser, nama: e.target.value })}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="email@contoh.com"
+                value={newUser.email}
+                onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Minimal 6 karakter"
+                  value={newUser.password}
+                  onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </Button>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="role">Role</Label>
+              <Select
+                value={newUser.role}
+                onValueChange={(value) => setNewUser({ ...newUser, role: value })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Pilih role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="rekrut">
+                    <div className="flex items-center gap-2">
+                      <UserX className="w-4 h-4" />
+                      Rekrut
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="penilai">
+                    <div className="flex items-center gap-2">
+                      <UserCheck className="w-4 h-4" />
+                      Penilai
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="admin">
+                    <div className="flex items-center gap-2">
+                      <Shield className="w-4 h-4" />
+                      Admin
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setAddUserDialog(false)} disabled={addingUser}>
+              Batal
+            </Button>
+            <Button onClick={handleAddUser} disabled={addingUser}>
+              {addingUser ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <UserPlus className="w-4 h-4 mr-2" />
+              )}
+              {addingUser ? 'Menyimpan.. .' : 'Tambah User'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Delete Confirmation Dialog */}
       <AlertDialog
         open={deleteDialog.open}
@@ -532,7 +743,7 @@ const AdminUserManagement = () => {
               {deleting
                 ? deleteDialog.isBulk
                   ? `Menghapus ${deleteProgress.current}/${deleteProgress.total}...`
-                  : 'Menghapus...'
+                  : 'Menghapus.. .'
                 : deleteDialog.isBulk
                 ? `Hapus ${selectedIds.length} User`
                 : 'Hapus'}
