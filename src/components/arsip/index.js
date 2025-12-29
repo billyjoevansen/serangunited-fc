@@ -1,1 +1,1 @@
-export { default as ArsipPemainModal } from './ArsipPemainModal';
+export { default as ArsipPemainModal } from './arsipPemainModal';
