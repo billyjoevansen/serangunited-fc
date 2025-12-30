@@ -3,7 +3,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Progress } from '@/components/ui/progress';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, Ruler, Weight } from 'lucide-react';
 import { InfoTinggiBadan } from '@/components/pemain';
@@ -14,6 +13,7 @@ import { cn } from '@/lib/utils';
 const PenilaianSummary = ({ pemain, average, categoryAverages }) => {
   const [showPosturInfo, setShowPosturInfo] = useState(false);
   const avgNum = parseFloat(average);
+  const Icon = category.icon;
 
   return (
     <Card className="mb-6 sticky top-20 z-10 border-2 border-primary/20 shadow-lg">
@@ -74,14 +74,19 @@ const PenilaianSummary = ({ pemain, average, categoryAverages }) => {
 
         {/* Ringkasan per kategori */}
         <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t">
-          {Object.entries(PENILAIAN_CATEGORIES).map(([key, category]) => (
-            <div key={key} className="text-center p-2 bg-muted rounded-lg">
-              <p className="text-xs text-muted-foreground mb-1">
-                {category.icon} {category.title.split(' ')[0]}
-              </p>
-              <p className="font-bold text-primary">{categoryAverages[key]}</p>
-            </div>
-          ))}
+          {Object.entries(PENILAIAN_CATEGORIES).map(([key, category]) => {
+            const Icon = category.icon;
+
+            return (
+              <div key={key} className="text-center p-2 bg-muted rounded-lg">
+                <p className="flex items-center justify-center gap-1 text-xs text-muted-foreground mb-1">
+                  {Icon && <Icon className="w-3 h-3" />}
+                  {category.title.split(' ')[0]}
+                </p>
+                <p className="font-bold text-primary">{categoryAverages[key]}</p>
+              </div>
+            );
+          })}
         </div>
       </CardContent>
     </Card>

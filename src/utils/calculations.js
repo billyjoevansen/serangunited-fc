@@ -1,3 +1,5 @@
+import { Brain, Heart, Target, Zap } from "lucide-react";
+
 // Daftar posisi pemain
 export const POSISI_OPTIONS = [
   'Penjaga Gawang (GK)',
@@ -270,28 +272,28 @@ export const calculateCategoryAverage = (penilaian, fields) => {
 export const PENILAIAN_CATEGORIES = {
   teknik:  {
     title: 'Teknik & Skill',
-    icon:  '⚽',
+    icon:  Target,
     color: 'blue',
     description: 'Kemampuan dasar bermain sepakbola',
     fields: ['teknik_dasar', 'keterampilan_spesifik', 'keseimbangan']
   },
   fisik: {
     title: 'Fisik & Postur',
-    icon:  '💪',
+    icon:  Zap,
     color: 'orange',
     description:  'Kondisi fisik dan kebugaran pemain',
     fields: ['daya_tahan', 'kecepatan_kelincahan', 'postur']
   },
   taktik: {
     title: 'Taktik & Kognitif',
-    icon: '🧠',
+    icon: Brain,
     color: 'purple',
     description:  'Kecerdasan dan pemahaman permainan',
     fields: ['reading_game', 'decision_making', 'adaptasi']
   },
   mental: {
     title: 'Mental & Sikap',
-    icon: '🎯',
+    icon: Heart,
     color: 'green',
     description: 'Mentalitas dan karakter pemain',
     fields: ['mentalitas', 'disiplin', 'team_player', 'rekam_jejak']

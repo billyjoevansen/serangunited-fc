@@ -14,6 +14,7 @@ const ScoreCategory = ({
   onChange,
   pemainData = null,
 }) => {
+  const Icon = icon;
   return (
     <Card className="mb-6">
       <CardHeader className="pb-4">
@@ -23,7 +24,7 @@ const ScoreCategory = ({
           </Badge>
           <div>
             <CardTitle className="text-lg flex items-center gap-2">
-              <span>{icon}</span>
+              <Icon className="w-4 h-4 text-muted-foreground" />
               {title}
             </CardTitle>
             <CardDescription>{description}</CardDescription>
